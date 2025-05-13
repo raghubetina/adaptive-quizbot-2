@@ -23,7 +23,8 @@ class QuizzesController < ApplicationController
 
     if the_quiz.valid?
       the_quiz.save
-      redirect_to("/quizzes", { :notice => "Quiz created successfully." })
+
+      redirect_to("/quizzes/#{the_quiz.id}", { :notice => "Quiz created successfully." })
     else
       redirect_to("/quizzes", { :alert => the_quiz.errors.full_messages.to_sentence })
     end
