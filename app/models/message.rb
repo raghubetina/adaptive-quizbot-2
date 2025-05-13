@@ -10,4 +10,9 @@
 #  quiz_id    :integer
 #
 class Message < ApplicationRecord
+  belongs_to :quiz
+
+  validates :role, presence: true
+  validates :quiz_id, presence: true
+  validates :body, presence: true
 end
