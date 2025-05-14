@@ -26,6 +26,36 @@ class MessagesController < ApplicationController
     if the_message.valid?
       the_message.save
 
+      chat = OpenAI::Chat.new
+
+      # Get all the old messages
+
+      # Message.where({ :quiz_id => the_message.quiz_id })
+
+      existing_messages = the_message.quiz.messages.order(:created_at)
+
+      # Loop through, and for each one
+      # Add it to the Chat
+      existing_messages.each do |a_message|
+        if a_message.role == "system"
+          chat.system(a_message.body)
+        elsif a_message.role = "user"
+          chat.user(a_message.body)
+        else
+          chat.assistant(a_message.body)
+        end
+      end
+
+      # Dispatch the next API request
+      next_llm_content = chat.assistant!
+  
+      # Save it
+      next_message = Message.new
+      next_message.quiz_id = the_message.quiz_id
+      next_message.role = "assistant"
+      next_message.body = next_llm_content
+      next_message.save
+
       redirect_to("/quizzes/#{the_message.quiz_id}", { :notice => "Message created successfully." })
     else
       redirect_to("/messages", { :alert => the_message.errors.full_messages.to_sentence })
