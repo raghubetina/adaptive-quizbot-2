@@ -27,7 +27,7 @@ class QuizzesController < ApplicationController
       system_message = Message.new
       system_message.quiz_id = the_quiz.id
       system_message.role = "system"
-      system_message.body = "You are a #{the_quiz.topic} tutor. Ask the user five questions to assess their Python proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
+      system_message.body = "You are a #{the_quiz.topic} tutor. Ask the user five questions to assess their #{the_quiz.topic} proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
 
 In the end, provide a score between 0 and 10."
       system_message.save
@@ -38,6 +38,17 @@ In the end, provide a score between 0 and 10."
       user_message.body = "Can you assess my #{the_quiz.topic} proficiency?"
       user_message.save
 
+      chat = OpenAI::Chat.new
+      chat.model = "o3"
+      chat.system(system_message.body)
+      chat.user(user_message.body)
+      llm_content = chat.assistant!
+
+      assistant_message = Message.new
+      assistant_message.quiz_id = the_quiz.id
+      assistant_message.role = "assistant"
+      assistant_message.body = llm_content
+      assistant_message.save
 
       redirect_to("/quizzes/#{the_quiz.id}", { :notice => "Quiz created successfully." })
     else
