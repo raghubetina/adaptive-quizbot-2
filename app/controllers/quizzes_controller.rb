@@ -24,13 +24,19 @@ class QuizzesController < ApplicationController
     if the_quiz.valid?
       the_quiz.save
 
-      sys = Message.new
-      sys.quiz_id = the_quiz.id
-      sys.role = "system"
-      sys.body = "You are a #{the_quiz.topic} tutor. Ask the user five questions to assess their Python proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
+      system_message = Message.new
+      system_message.quiz_id = the_quiz.id
+      system_message.role = "system"
+      system_message.body = "You are a #{the_quiz.topic} tutor. Ask the user five questions to assess their Python proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
 
 In the end, provide a score between 0 and 10."
-      sys.save
+      system_message.save
+
+      user_message = Message.new
+      user_message.quiz_id = the_quiz.id
+      user_message.role = "user"
+      user_message.body = "Can you assess my #{the_quiz.topic} proficiency?"
+      user_message.save
 
 
       redirect_to("/quizzes/#{the_quiz.id}", { :notice => "Quiz created successfully." })
