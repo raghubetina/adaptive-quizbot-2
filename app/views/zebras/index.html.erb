@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all zebras
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new zebra
+    </h2>
+
+    <form action="/insert_zebra" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="age_box">
+          Age
+        </label>
+
+        <input type="text" id="age_box" name="query_age">
+      </div>
+
+      <button>
+        Create zebra
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Age
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_zebras.each do |a_zebra| %>
+      <tr>
+        <td>
+          <%= a_zebra.id %>
+        </td>
+
+        <td>
+          <%= a_zebra.name %>
+        </td>
+
+        <td>
+          <%= a_zebra.age %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_zebra.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_zebra.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/zebras/<%= a_zebra.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Zebra resource:
+
+  # CREATE
+  post("/insert_zebra", { :controller => "zebras", :action => "create" })
+          
+  # READ
+  get("/zebras", { :controller => "zebras", :action => "index" })
+  
+  get("/zebras/:path_id", { :controller => "zebras", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_zebra/:path_id", { :controller => "zebras", :action => "update" })
+  
+  # DELETE
+  get("/delete_zebra/:path_id", { :controller => "zebras", :action => "destroy" })
+
+  #------------------------------
+
   get("/", { :controller => "quizzes", :action => "index" })
 
 

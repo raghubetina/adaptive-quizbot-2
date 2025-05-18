@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Zebra #<%= @the_zebra.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/zebras">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_zebra/<%= @the_zebra.id %>">
+          Delete zebra
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_zebra.name %>
+      </dd>
+
+      <dt>
+        Age
+      </dt>
+      <dd>
+        <%= @the_zebra.age %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_zebra.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_zebra.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit zebra
+    </h2>
+
+    <form action="/modify_zebra/<%= @the_zebra.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_zebra.name %>">
+      </div>
+
+      <div>
+        <label for="age_box">
+          Age
+        </label>
+
+        <input type="text" id="age_box" name="query_age" value="<%= @the_zebra.age %>">
+      </div>
+
+      <button>
+        Update zebra
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
